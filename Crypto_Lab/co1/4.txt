@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+    char t[100], k[50];
+    
+    printf("--- Polyalphabetic (Vigenere) Cipher ---\n");
+    printf("Enter plaintext: "); 
+    fgets(t, sizeof(t), stdin);
+    t[strcspn(t, "\n")] = 0;
+    
+    printf("Enter key: "); 
+    fgets(k, sizeof(k), stdin);
+    k[strcspn(k, "\n")] = 0;
+
+    for(int i = 0, j = 0; t[i]; i++) {
+        if(isalpha(t[i])) {
+            int shift = toupper(k[j++ % strlen(k)]) - 'A';
+            t[i] = islower(t[i]) ? (t[i]-'a'+shift)%26+'a' : (t[i]-'A'+shift)%26+'A';
+        }
+    }
+    
+    printf("Encrypted Ciphertext: %s\n", t);
+    return 0;
+}

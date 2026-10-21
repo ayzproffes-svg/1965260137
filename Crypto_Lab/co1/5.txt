@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+void affineEncrypt(char text[], int a, int b) {
+    for (int i = 0; text[i] != '\0'; i++) {
+        char ch = text[i];
+        if (ch >= 'a' && ch <= 'z') {
+            text[i] = ((a * (ch - 'a') + b) % 26) + 'a';
+        } else if (ch >= 'A' && ch <= 'Z') {
+            text[i] = ((a * (ch - 'A') + b) % 26) + 'A';
+        }
+    }
+}
+
+int main() {
+    char text[100];
+    int a, b;
+    
+    printf("--- Affine Cipher ---\n");
+    printf("Enter plaintext: ");
+    fgets(text, sizeof(text), stdin);
+    text[strcspn(text, "\n")] = 0;
+    
+    printf("Enter multiplier 'a' (coprime to 26, e.g., 3, 5, 7): ");
+    scanf("%d", &a);
+    printf("Enter shift 'b': ");
+    scanf("%d", &b);
+    
+    affineEncrypt(text, a, b);
+    printf("Encrypted Ciphertext: %s\n", text);
+    
+    return 0;
+}

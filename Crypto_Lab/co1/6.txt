@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+
+// Function to find the modular multiplicative inverse of 'a' modulo 26
+int modInverse(int a) {
+    a = a % 26;
+    for (int x = 1; x < 26; x++) {
+        if ((a * x) % 26 == 1) {
+            return x;
+        }
+    }
+    return -1;
+}
+
+void breakAffineCipher() {
+    // Given from problem description:
+    // Most frequent ciphertext letter 'B' (index 1) maps to plaintext 'e' (index 4)
+    // Second most frequent ciphertext letter 'U' (index 20) maps to plaintext 't' (index 19)
+    
+    int C1 = 1;   // 'B'
+    int P1 = 4;   // 'e'
+    int C2 = 20;  // 'U'
+    int P2 = 19;  // 't'
+
+    int a = -1, b = -1;
+
+    // We solve the system of congruences:
+    // C1 = (a * P1 + b) mod 26 => 1 = (a * 4 + b) mod 26
+    // C2 = (a * P2 + b) mod 26 => 20 = (a * 19 + b) mod 26
+    // Subtracting the two equations: (C2 - C1) = a * (P2 - P1) mod 26
+    
+    int diffC = (C2 - C1 + 26) % 26;
+    int diffP = (P2 - P1 + 26) % 26;
+
+    int invP = modInverse(diffP);
+    if (invP == -1) {
+        printf("Modular inverse does not exist for the given letter difference.\n");
+        return;
+    }
+
+    a = (diffC * invP) % 26;
+    b = (C1 - (a * P1)) % 26;
+    if (b < 0) b += 26;
+
+    printf("==================================================\n");
+    printf(" AFFINE CIPHER CRYPTANALYSIS RESULTS              \n");
+    printf("==================================================\n");
+    printf("Derived Key Components:\n");
+    printf("  Multiplier (a) = %d\n", a);
+    printf("  Shift (b)      = %d\n", b);
+    printf("  Key Formula    : C = (%d * P + %d) mod 26\n", a, b);
+    printf("==================================================\n");
+}
+
+int main() {
+    breakAffineCipher();
+    return 0;
+}

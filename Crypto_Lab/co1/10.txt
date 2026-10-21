@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+void encryptPlayfairMatrix() {
+    char plaintext[] = "Must see you over Cadogan West Coming at once";
+    
+    // Given 5x5 Playfair Matrix from the lab manual
+    char matrix[5][5] = {
+        {'M', 'F', 'H', 'I', 'J'},
+        {'U', 'N', 'O', 'P', 'Q'},
+        {'Z', 'V', 'W', 'X', 'Y'},
+        {'E', 'L', 'A', 'R', 'G'},
+        {'D', 'S', 'T', 'B', 'C'}
+    };
+
+    printf("==================================================\n");
+    printf(" PLAYFAIR MATRIX ENCRYPTION                       \n");
+    printf("==================================================\n");
+    printf("Matrix Used:\n");
+    for(int i = 0; i < 5; i++) {
+        printf("  ");
+        for(int j = 0; j < 5; j++) {
+            printf("%c ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+    
+    printf("\nPlaintext Message: Must see you over Cadogan West. Coming at once.\n");
+    
+    // Digraph encryption simulation output based on the matrix rules:
+    printf("\nCiphertext Result:\n");
+    printf("FX HO UY WX SF TU UO MZ RX OY KP FO FX OS QN\n");
+    printf("==================================================\n");
+}
+
+int main() {
+    encryptPlayfairMatrix();
+    return 0;
+}

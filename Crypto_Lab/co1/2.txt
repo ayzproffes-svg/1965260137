@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+    char t[100];
+    char *k = "QWERTYUIOPASDFGHJKLZXCVBNM"; // Substitution key
+    
+    printf("--- Monoalphabetic Substitution Cipher ---\n");
+    printf("Enter plaintext: ");
+    fgets(t, sizeof(t), stdin);
+    t[strcspn(t, "\n")] = 0;
+    
+    for(int i = 0; t[i]; i++) {
+        if(isalpha(t[i])) {
+            t[i] = islower(t[i]) ? tolower(k[t[i]-'a']) : toupper(k[t[i]-'A']);
+        }
+    }
+    
+    printf("Encrypted Ciphertext: %s\n", t);
+    return 0;
+}

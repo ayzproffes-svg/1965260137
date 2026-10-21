@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+void generateKeywordCipher() {
+    char keyword[] = "CIPHER";
+    char plain[] = "abcdefghijklmnopqrstuvwxyz";
+    char cipher[27];
+    int used[26] = {0};
+    int idx = 0;
+
+    // Step 1: Add unique letters from the keyword to the cipher alphabet
+    for (int i = 0; i < strlen(keyword); i++) {
+        char ch = toupper(keyword[i]);
+        if (!used[ch - 'A']) {
+            cipher[idx++] = ch;
+            used[ch - 'A'] = 1;
+        }
+    }
+
+    // Step 2: Add the remaining unused letters in normal alphabetical order[cite: 4]
+    for (char ch = 'A'; ch <= 'Z'; ch++) {
+        if (!used[ch - 'A']) {
+            cipher[idx++] = ch;
+        }
+    }
+    cipher[idx] = '\0';
+
+    // Output the results matching the lab mapping format
+    printf("==================================================\n");
+    printf(" KEYWORD-BASED MONOALPHABETIC CIPHER              \n");
+    printf("==================================================\n");
+    printf("Keyword Provided : %s\n", keyword);
+    printf("Plain  : %s\n", plain);
+    printf("Cipher : %s\n", cipher);
+    printf("==================================================\n");
+}
+
+int main() {
+    generateKeywordCipher();
+    return 0;
+}

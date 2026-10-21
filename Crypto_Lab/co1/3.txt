@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+char matrix[5][5] = {
+    {'K', 'E', 'Y', 'W', 'O'},
+    {'R', 'A', 'B', 'C', 'D'},
+    {'F', 'G', 'H', 'I', 'L'},
+    {'M', 'N', 'P', 'Q', 'S'},
+    {'T', 'U', 'V', 'X', 'Z'}
+};
+
+void findPos(char c, int *r, int *col) {
+    if(c == 'J') c = 'I';
+    for(int i = 0; i < 5; i++) 
+        for(int j = 0; j < 5; j++) 
+            if(matrix[i][j] == c) { *r = i; *col = j; }
+}
+
+int main() {
+    char p1, p2;
+    int r1, c1, r2, c2;
+    
+    printf("--- Playfair Cipher ---\n");
+    printf("Enter two plaintext letters (e.g., H E): ");
+    scanf(" %c %c", &p1, &p2);
+    
+    p1 = toupper(p1); p2 = toupper(p2);
+    findPos(p1, &r1, &c1); 
+    findPos(p2, &r2, &c2);
+    
+    printf("Encrypted Ciphertext: ");
+    if(r1 == r2) {
+        printf("%c%c\n", matrix[r1][(c1+1)%5], matrix[r2][(c2+1)%5]);
+    } else if(c1 == c2) {
+        printf("%c%c\n", matrix[(r1+1)%5][c1], matrix[(r2+1)%5][c2]);
+    } else {
+        printf("%c%c\n", matrix[r1][c2], matrix[r2][c1]);
+    }
+    
+    return 0;
+}
